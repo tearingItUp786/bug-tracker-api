@@ -1,0 +1,49 @@
+{
+    "name": "bug-tracker-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+        "start": "npm run serve",
+        "serve": "node dist/index.js",
+        "watch-node": "nodemon dist/index.js",
+        "build-ts": "tsc",
+        "watch-ts": "tsc -w",
+        "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+        "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tearingItUp786/bug-tracker-api.git"
+    },
+    "keywords": [],
+    "author": "Taran 'tearing it up' Bains",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/tearingItUp786/bug-tracker-api/issues"
+    },
+    "homepage": "https://github.com/tearingItUp786/bug-tracker-api#readme",
+    "devDependencies": {
+        "@types/express": "^4.17.6",
+        "@types/lodash": "^4.14.149",
+        "@types/node": "^13.11.1",
+        "@typescript-eslint/eslint-plugin": "^2.27.0",
+        "@typescript-eslint/parser": "^2.27.0",
+        "concurrently": "^5.1.0",
+        "eslint": "^6.8.0",
+        "nodemon": "^2.0.3",
+        "ts-node": "^8.8.2",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {
+        "bcrypt": "^4.0.1",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.15",
+        "pg": "^8.0.2"
+    }
+}
