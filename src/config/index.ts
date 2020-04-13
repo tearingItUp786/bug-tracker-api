@@ -16,11 +16,11 @@ const baseConfig = {
         jwtExp: '100d',
     },
     db: {
-        host: process.env.PGHOST,
-        database: process.env.PGDATABASE,
-        user: process.env.PGUSER,
-        password: process.env.PGPASSWORD,
-        port: Number(process.env.PGPORT),
+        host: process.env.PGHOST || 'localhost',
+        database: process.env.PGDATABASE || 'bt',
+        user: process.env.PGUSER || 'postgres',
+        password: process.env.PGPASSWORD || null,
+        port: Number(process.env.PGPORT) || 5432,
     },
 };
 

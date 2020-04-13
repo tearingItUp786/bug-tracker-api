@@ -1,4 +1,3 @@
-// Update with your config settings.
 import config from './src/config';
 interface KnexConfig {
     [key: string]: object;
@@ -15,10 +14,10 @@ const knexConfig: KnexConfig = {
             max: 10,
         },
         migrations: {
-            directory: __dirname + '/migrations',
+            directory: __dirname + '/knex/migrations',
         },
         seeds: {
-            directory: __dirname + '/seeds',
+            directory: __dirname + '/knex/seeds',
         },
     },
 
@@ -55,4 +54,4 @@ const knexConfig: KnexConfig = {
     },
 };
 
-export default knexConfig;
+export = knexConfig;
