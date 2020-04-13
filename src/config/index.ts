@@ -15,7 +15,13 @@ const baseConfig = {
         jwt: process.env.JWT_SECRET,
         jwtExp: '100d',
     },
-    dbUrl: process.env.DB_URL,
+    db: {
+        host: process.env.PGHOST,
+        database: process.env.PGDATABASE,
+        user: process.env.PGUSER,
+        password: process.env.PGPASSWORD,
+        port: Number(process.env.PGPORT),
+    },
 };
 
 let envConfig = {};
