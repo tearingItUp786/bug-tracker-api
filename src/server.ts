@@ -3,7 +3,7 @@ import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
 
 import config from './config';
-import db from './db';
+import { signUp, signIn, protect } from './utils/auth';
 const app = express();
 
 app.disable('x-powered-by');
@@ -11,9 +11,12 @@ app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.get('/', async (req, res) => {
-    const stuff = await db.query('SELECT NOW()');
-    res.json(stuff.rows);
+app.post('/signup', signUp);
+app.post('/signin', signIn);
+
+app.get('/', protect);
+app.get('/', (req, res) => {
+    res.status(200).send({ data: req.user });
 });
 
 const start = async () => {
