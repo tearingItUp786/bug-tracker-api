@@ -10,11 +10,14 @@ function tableHelper(tableName: string, selectableProps: string[]) {
 
     const destroy = (id: number) => kx.del().from(tableName).where({ id });
 
+    const addOne = (props: any) => kx.insert(props).into(tableName).returning(selectableProps);
+
     return {
         findAll,
         findWhere,
         update,
         destroy,
+        addOne,
     };
 }
 

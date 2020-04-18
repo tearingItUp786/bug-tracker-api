@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
 import { kx } from '../../knex';
+import { tableHelper } from '../utils/db-helpers';
+
+const projectTable = tableHelper('projects', ['*']);
+const userProjectsTable = tableHelper('user_projects', ['*']);
 
 const query = () =>
     kx
@@ -28,5 +32,19 @@ export const getOne = async (req: Request, res: Response) => {
     } catch (e) {
         console.error(e);
         res.status(500).send('Issue fetching project ' + req.params.id);
+    }
+};
+
+export const addOne = async (req: Request, res: Response) => {
+    try {
+        const [added] = await projectTable.addOne(req.body);
+        await userProjectsTable.addOne({ user_id: req.user.id, project_id: added.id });
+        res.status(200).json({ data: added });
+    } catch (e) {
+        console.error(e);
+        if (e.code === '23505') {
+            res.status(422).send(e.detail);
+        }
+        res.status(500).send(e.detail);
     }
 };
