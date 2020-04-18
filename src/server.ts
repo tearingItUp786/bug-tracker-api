@@ -5,6 +5,7 @@ import cors from 'cors';
 import config from './config';
 import { signUp, signIn, protect } from './utils/auth';
 import userRouter from './routes/users';
+import projectRouter from './routes/projects';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.post('/signin', signIn);
 
 app.use('/api', protect);
 app.use('/api/user', userRouter);
+app.use('/api/project', projectRouter);
 
 const start = async () => {
     try {
