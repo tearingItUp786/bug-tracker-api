@@ -93,7 +93,10 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
         return res.status(401).end();
     }
 
-    const user = await kx.select('id', 'email', 'first_name', 'last_name').from('users').where({ id: payload.id });
+    const [user] = await kx
+        .select('id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at')
+        .from('users')
+        .where({ id: payload.id });
 
     if (!user) {
         return res.status(401).end();

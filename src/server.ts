@@ -4,6 +4,8 @@ import cors from 'cors';
 
 import config from './config';
 import { signUp, signIn, protect } from './utils/auth';
+import userRouter from './routes/users';
+
 const app = express();
 
 app.disable('x-powered-by');
@@ -14,10 +16,8 @@ app.use(urlencoded({ extended: true }));
 app.post('/signup', signUp);
 app.post('/signin', signIn);
 
-app.get('/', protect);
-app.get('/', (req, res) => {
-    res.status(200).send({ data: req.user });
-});
+app.use('/api', protect);
+app.use('/api/user', userRouter);
 
 const start = async () => {
     try {
