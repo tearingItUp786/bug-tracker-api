@@ -1,21 +1,9 @@
 import { Request, Response } from 'express';
-import { kx } from '../../knex';
-import { tableHelper } from '../utils/db-helpers';
-
-const projectTable = tableHelper('projects', ['*']);
-const userProjectsTable = tableHelper('user_projects', ['*']);
-
-const query = () =>
-    kx
-        .select('*')
-        .from('user_projects AS up')
-        .leftJoin('projects AS p', 'up.project_id', 'p.id')
-        .leftJoin('users AS u', 'up.user_id', 'u.id')
-        .options({ nestTables: true });
+import { getProjectsForUser, getOneProject, addOneProject } from '../models/projects';
 
 export const getAll = async (req: Request, res: Response) => {
     try {
-        const projects = await query().where('u.id', '=', req.user.id);
+        const projects = await getProjectsForUser(req.user.id);
         res.status(200).json({ data: projects });
     } catch (e) {
         console.error(e);
@@ -27,7 +15,7 @@ export const getOne = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         if (!id) res.send(400).send('Missing id parameter');
-        const project = await query().where('u.id', '=', req.user.id).andWhere('p.id', '=', id);
+        const project = await getOneProject(Number(id), req.user.id);
         res.status(200).json({ data: project });
     } catch (e) {
         console.error(e);
@@ -37,8 +25,7 @@ export const getOne = async (req: Request, res: Response) => {
 
 export const addOne = async (req: Request, res: Response) => {
     try {
-        const [added] = await projectTable.addOne(req.body);
-        await userProjectsTable.addOne({ user_id: req.user.id, project_id: added.id });
+        const added = await addOneProject(req.body, req.user.id);
         res.status(200).json({ data: added });
     } catch (e) {
         console.error(e);
