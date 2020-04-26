@@ -1,6 +1,6 @@
-import { kx } from '../../knex';
-import { tableHelper } from '../utils/db-helpers';
-import { ProjectData, UserProjectData } from '../../types';
+import { kx } from '../../../knex';
+import { tableHelper } from '../../utils/db-helpers';
+import { ProjectData, UserProjectData } from '../../../types';
 
 const projectTable = tableHelper('projects', ['*']);
 const userProjectsTable = tableHelper('user_projects', ['*']);

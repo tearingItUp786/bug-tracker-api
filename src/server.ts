@@ -4,8 +4,8 @@ import cors from 'cors';
 
 import config from './config';
 import { signUp, signIn, protect } from './utils/auth';
-import userRouter from './routes/users';
-import projectRouter from './routes/projects';
+import userRouter from './resources/users';
+import projectRouter from './resources/users';
 
 const app = express();
 
