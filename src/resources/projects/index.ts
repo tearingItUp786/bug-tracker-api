@@ -1,1 +1,1 @@
-export { default } from './projets.router'
+export { default } from './projects.router';

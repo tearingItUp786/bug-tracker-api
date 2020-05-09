@@ -5,7 +5,8 @@ import cors from 'cors';
 import config from './config';
 import { signUp, signIn, protect } from './utils/auth';
 import userRouter from './resources/users';
-import projectRouter from './resources/users';
+import projectRouter from './resources/projects';
+import { handleError } from './utils/AppError';
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.post('/signin', signIn);
 app.use('/api', protect);
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
+
+app.use(handleError);
 
 const start = async () => {
     try {
