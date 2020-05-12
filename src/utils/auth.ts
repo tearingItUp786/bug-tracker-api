@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Response, Request, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 
-import { kx } from '../../knex';
+import { kx } from '../../utils_knex';
 import config from '../config';
 
 interface JWTObject {

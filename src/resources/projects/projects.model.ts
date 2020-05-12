@@ -1,8 +1,6 @@
-import { kx } from '../../../knex';
-import { tableHelper } from '../../utils/db-helpers';
-import { ProjectData, UserProjectData } from '../../../types';
-import { AppError } from '../../utils/AppError';
-import { UNPROCESSABLE_ENTITY } from 'http-status-codes';
+import { kx } from '@knex';
+import { tableHelper } from '@utils/db-helpers';
+import { RestProjectData } from 'typings';
 
 const projectTable = tableHelper('projects', ['*']);
 const userProjectsTable = tableHelper('user_projects', ['*']);
@@ -21,13 +19,13 @@ const getOneProject = (projectId: number, userId: number) =>
 
 const findProjectByName = (name: string) => query().where('p.name', '=', name);
 
-const addOneProject = async (projectData: ProjectData, userId: number) => {
+const addOneProject = async (projectData: RestProjectData, userId: number) => {
     const [added] = await projectTable.addOne(projectData);
     await userProjectsTable.addOne({ user_id: userId, project_id: added.id });
     return added;
 };
 
-const updateOneProject = async (projectId: number, projectData: ProjectData) => {
+const updateOneProject = async (projectId: number, projectData: RestProjectData) => {
     const [updated] = await projectTable.update(projectId, projectData);
     return updated;
 };

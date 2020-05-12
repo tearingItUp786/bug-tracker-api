@@ -54,6 +54,13 @@
         "jsonwebtoken": "^8.5.1",
         "knex": "^0.21.0",
         "lodash": "^4.17.15",
+        "module-alias": "^2.2.2",
         "pg": "^8.0.2"
+    },
+    "_moduleAliases": {
+        "@utils": "dist/src/utils/",
+        "@resources": "dist/src/resources/",
+        "@config": "dist/src/config/index.js",
+        "@knex": "dist/utils_knex/index.js"
     }
 }

@@ -7,7 +7,7 @@ import {
     updateOneProject,
     findProjectByName,
 } from './projects.model';
-import { AppError } from '../../utils/AppError';
+import { AppError } from '@utils/AppError';
 import { validationResult } from 'express-validator';
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,7 +36,8 @@ export const addOne = async (req: Request, res: Response, next: NextFunction) =>
         const [exists] = await findProjectByName(req.body.name);
         if (exists) throw new AppError(UNPROCESSABLE_ENTITY, `Project with name: ${req.body.name} already exists`);
 
-        const added = await addOneProject(req.body, req.user.id);
+        const { name, url } = req.body;
+        const added = await addOneProject({ name, url }, req.user.id);
         res.header('Location', added.id).status(CREATED).json({ data: added });
     } catch (e) {
         next(e);

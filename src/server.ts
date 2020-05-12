@@ -2,11 +2,11 @@ import express from 'express';
 import { json, urlencoded } from 'body-parser';
 import cors from 'cors';
 
-import config from './config';
-import { signUp, signIn, protect } from './utils/auth';
-import userRouter from './resources/users';
-import projectRouter from './resources/projects';
-import { handleError } from './utils/AppError';
+import config from '@config';
+import { signUp, signIn, protect } from '@utils/auth';
+import userRouter from '@resources/users';
+import projectRouter from '@resources/projects';
+import { handleError } from '@utils/AppError';
 
 const app = express();
 

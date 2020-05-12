@@ -9,11 +9,14 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": ".",
+        "baseUrl": "./",
         "paths": {
-            "*": ["node_modules/*", "src/types/*"]
-        }
+            "@knex": ["utils_knex/index.ts"],
+            "@config": ["src/config/index.ts"],
+            "@utils/*": ["src/utils/*"],
+            "@resources/*": ["src/resources/*"]
+        },
+        "typeRoots": ["node_modules/@types", "/typings"]
     },
-    "include": ["src/**/*"],
-    "files": ["typings.d.ts"]
+    "include": ["src/**/*"]
 }
