@@ -1,16 +1,26 @@
-import { Request, Response } from 'express';
-import { tableHelper } from '@utils/db-helpers';
-
-const userTable = tableHelper('users', ['id', 'email', 'first_name', 'last_name', 'created_at', 'updated_at']);
+import { Request, Response, NextFunction } from 'express';
+import { updateUser } from './users.model';
+import { AppError } from '@utils/AppError';
+import { hasValidKeys } from '@utils/helpers';
+import { UNPROCESSABLE_ENTITY } from 'http-status-codes';
+import { validationResult } from 'express-validator';
 
 export const me = (req: Request, res: Response) => res.status(200).json({ data: req.user });
 
-export const updateMe = async (req: Request, res: Response) => {
+export const updateMe = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const [update] = await userTable.update(req.user.id, req.body);
+        const { id } = req.user;
+        if (!id) throw new AppError(UNPROCESSABLE_ENTITY, 'Need the id param for update');
+        const valErrors = validationResult(req);
+        if (!valErrors.isEmpty()) throw new AppError(UNPROCESSABLE_ENTITY, 'Failed validation', valErrors.array());
+
+        if (!hasValidKeys(req.body, ['first_name', 'last_name', 'email'])) {
+            res.status(200).send({});
+        }
+        const { first_name, last_name, email } = req.body;
+        const update = await updateUser(Number(id), { first_name, last_name, email });
         res.status(200).send(update);
     } catch (error) {
-        console.error(error);
-        res.status(400).end();
+        next(error);
     }
 };

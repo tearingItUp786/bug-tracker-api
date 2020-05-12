@@ -14,8 +14,10 @@ const query = () =>
 
 const getProjectsForUser = (id: number) => query().where('u.id', '=', id);
 
-const getOneProject = (projectId: number, userId: number) =>
-    getProjectsForUser(userId).andWhere('p.id', '=', projectId);
+const getOneProject = async (projectId: number, userId: number) => {
+    const [one] = await getProjectsForUser(userId).andWhere('p.id', '=', projectId);
+    return one;
+};
 
 const findProjectByName = (name: string) => query().where('p.name', '=', name);
 

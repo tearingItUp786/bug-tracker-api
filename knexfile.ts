@@ -14,10 +14,10 @@ const knexConfig: KnexConfig = {
             max: 10,
         },
         migrations: {
-            directory: __dirname + '/knex/migrations',
+            directory: __dirname + '/utils_knex/migrations',
         },
         seeds: {
-            directory: __dirname + '/knex/seeds',
+            directory: __dirname + '/utils_knex/seeds',
         },
     },
 
