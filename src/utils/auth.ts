@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 
-import { kx } from '../../utils_knex';
-import config from '../config';
+import { kx } from '@knex';
+import config from '@config';
 
 interface JWTObject {
     id: number;
