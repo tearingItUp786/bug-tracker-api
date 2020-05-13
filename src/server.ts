@@ -6,6 +6,7 @@ import config from '@config';
 import { signUp, signIn, protect } from '@utils/auth';
 import userRouter from '@resources/users';
 import projectRouter from '@resources/projects';
+import swimLaneRouter from '@resources/swim_lanes';
 import { handleError } from '@utils/AppError';
 
 const app = express();
@@ -21,6 +22,7 @@ app.post('/signin', signIn);
 app.use('/api', protect);
 app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
+app.use('/api/swim', swimLaneRouter);
 
 app.use(handleError);
 
