@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import { UNPROCESSABLE_ENTITY, CREATED } from 'http-status-codes';
 import {
     getProjectsForUser,
@@ -11,7 +11,7 @@ import { AppError } from '@utils/AppError';
 import { validationResult } from 'express-validator';
 import { hasValidKeys } from '@utils/helpers';
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll: RequestHandler = async (req, res, next) => {
     try {
         const projects = await getProjectsForUser(req.user.id);
         res.status(200).json({ data: projects });
@@ -20,7 +20,7 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+export const getOne: RequestHandler = async (req, res, next) => {
     try {
         const { id } = req.params;
         const project = await getOneProject(Number(id), req.user.id);
@@ -30,7 +30,7 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-export const addOne = async (req: Request, res: Response, next: NextFunction) => {
+export const addOne: RequestHandler = async (req, res, next) => {
     try {
         const valErrors = validationResult(req);
         if (!valErrors.isEmpty()) throw new AppError(UNPROCESSABLE_ENTITY, 'Failed validation', valErrors.array());
@@ -44,7 +44,7 @@ export const addOne = async (req: Request, res: Response, next: NextFunction) =>
     }
 };
 
-export const updateOne = async (req: Request, res: Response, next: NextFunction) => {
+export const updateOne: RequestHandler = async (req, res, next) => {
     try {
         const { id } = req.params;
         if (!id) throw new AppError(UNPROCESSABLE_ENTITY, 'Need the id param for entry to update');

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Response, Request, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 
 import { kx } from '../../utils_knex';
@@ -37,7 +37,7 @@ export const checkPassword = (user: any, password: string) => {
 };
 
 /** Route stuff */
-export const signUp = async (req: Request, res: Response) => {
+export const signUp: RequestHandler = async (req, res) => {
     const { body } = req;
     if (!body.email || !body.password) {
         res.status(400).send({ message: 'Need email and password' });
@@ -58,7 +58,7 @@ export const signUp = async (req: Request, res: Response) => {
     }
 };
 
-export const signIn = async (req: Request, res: Response) => {
+export const signIn: RequestHandler = async (req, res) => {
     const { body } = req;
     if (!body.email || !body.password) {
         res.status(400).send({ message: 'Need email and password' });
@@ -78,7 +78,7 @@ export const signIn = async (req: Request, res: Response) => {
     } catch (e) {}
 };
 
-export const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const protect: RequestHandler = async (req, res, next) => {
     const bearer = req.headers.authorization;
 
     if (!bearer || !bearer.startsWith('Bearer ')) {

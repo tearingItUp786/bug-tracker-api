@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import { getAllSwimLanes } from './swim_lanes.model';
 import { AppError } from '@utils/AppError';
 import { UNPROCESSABLE_ENTITY, OK } from 'http-status-codes';
 
-const getAllSwimLanesForUser = async (req: Request, res: Response, next: NextFunction) => {
+const getAllSwimLanesForUser: RequestHandler = async (req, res, next) => {
     try {
         const { project_id: id } = req.body;
         const nId = Number(id);

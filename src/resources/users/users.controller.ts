@@ -1,13 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
+import { RequestHandler } from 'express';
 import { updateUser } from './users.model';
 import { AppError } from '@utils/AppError';
 import { hasValidKeys } from '@utils/helpers';
 import { UNPROCESSABLE_ENTITY } from 'http-status-codes';
 import { validationResult } from 'express-validator';
 
-export const me = (req: Request, res: Response) => res.status(200).json({ data: req.user });
+export const me: RequestHandler = (req, res) => res.status(200).json({ data: req.user });
 
-export const updateMe = async (req: Request, res: Response, next: NextFunction) => {
+export const updateMe: RequestHandler = async (req, res, next) => {
     try {
         const { id } = req.user;
         if (!id) throw new AppError(UNPROCESSABLE_ENTITY, 'Need the id param for update');
