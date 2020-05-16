@@ -1,6 +1,18 @@
 import { tableHelper } from '@utils/db-helpers';
+import { RestIssueData } from 'typings';
 
-const issueTable = tableHelper('issues', ['*']);
+const issueTable = tableHelper('issues', [
+    'issues.id',
+    'issues.name',
+    'issues.description',
+    'issues.severity',
+    'issues.created_at',
+    'issues.updated_at',
+    'issues.url',
+    'issues.swim_lane_id',
+    'issues.reporter_id',
+    'issues.assignee_id',
+]);
 
 const query = (userId: number) =>
     issueTable
@@ -19,4 +31,9 @@ const getOneUserIssue = async (projectId: number, userId: number, issueId: numbe
     return issue;
 };
 
-export { getAllUserIssues, getOneUserIssue };
+const addOneUserIssue = async (projectData: RestIssueData) => {
+    const [added] = await issueTable.addOne(projectData);
+    return added;
+};
+
+export { getAllUserIssues, getOneUserIssue, addOneUserIssue };
