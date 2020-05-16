@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllSwimLanesForUser, getOneSwimLaneForUser } from './swim_lanes.controller';
+import { getAllSwimLanesForUser, getOneSwimLaneForUser, addSwimLane, updateOneSwim } from './swim_lanes.controller';
 import { checkSchema } from 'express-validator';
 
 const router = Router();
@@ -9,7 +9,21 @@ const schema = checkSchema({
     },
 });
 
-router.get('/', schema, getAllSwimLanesForUser);
-router.get('/:id', schema, getOneSwimLaneForUser);
+const postSchema = checkSchema({
+    name: {
+        isString: true,
+        optional: true,
+    },
+    description: {
+        isString: true,
+        optional: true,
+    },
+    project_id: {
+        isInt: true,
+    },
+});
+
+router.route('/').get(schema, getAllSwimLanesForUser).post(postSchema, addSwimLane);
+router.route('/:id').get(schema, getOneSwimLaneForUser).put(schema, updateOneSwim);
 
 export default router;

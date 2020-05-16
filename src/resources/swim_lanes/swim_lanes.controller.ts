@@ -1,8 +1,9 @@
 import { RequestHandler } from 'express';
-import { getAllSwimLanes, getOneSwimLane } from './swim_lanes.model';
+import { getAllSwimLanes, getOneSwimLane, addOneSwimLane, updateSwimEntry } from './swim_lanes.model';
 import { AppError } from '@utils/AppError';
-import { OK, BAD_REQUEST } from 'http-status-codes';
+import { OK, BAD_REQUEST, CREATED, NO_CONTENT } from 'http-status-codes';
 import { validationResult } from 'express-validator';
+import { RestSwimInterface } from 'typings';
 
 const getAllSwimLanesForUser: RequestHandler = async (req, res, next) => {
     try {
@@ -30,4 +31,29 @@ const getOneSwimLaneForUser: RequestHandler = async (req, res, next) => {
     }
 };
 
-export { getAllSwimLanesForUser, getOneSwimLaneForUser };
+const addSwimLane: RequestHandler = async (req: any & { body: RestSwimInterface }, res, next) => {
+    try {
+        const valErrors = validationResult(req);
+        if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
+        const { project_id, name, description } = req.body;
+        const added = await addOneSwimLane({ project_id, name, description });
+        res.status(CREATED).json({ added });
+    } catch (e) {
+        next(e);
+    }
+};
+
+const updateOneSwim: RequestHandler = async (req: any & { body: RestSwimInterface }, res, next) => {
+    try {
+        const valErrors = validationResult(req);
+        if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
+        const { id } = req.params;
+        const { project_id, name, description } = req.body;
+        const updated = await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
+        res.status(NO_CONTENT).json({ updated });
+    } catch (e) {
+        next(e);
+    }
+};
+
+export { getAllSwimLanesForUser, getOneSwimLaneForUser, addSwimLane, updateOneSwim };

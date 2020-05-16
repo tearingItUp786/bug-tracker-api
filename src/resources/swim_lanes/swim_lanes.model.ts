@@ -1,4 +1,5 @@
 import { tableHelper } from '@utils/db-helpers';
+import { RestSwimInterface } from 'typings';
 
 const swim = tableHelper('swim_lanes', [
     'swim_lanes.id',
@@ -19,4 +20,17 @@ const getAllSwimLanes = (project_id: number, userId: number) =>
 const getOneSwimLane = (project_id: number, swimId: number, userId: number) =>
     getAllSwimLanes(project_id, userId).andWhere('swim_lanes.id', '=', swimId);
 
-export { getAllSwimLanes, getOneSwimLane };
+const addOneSwimLane = async (swimData: RestSwimInterface) => {
+    const [added] = await swim.addOne(swimData);
+    return added;
+};
+
+const updateSwimEntry = async (swimData: RestSwimInterface, swimId: number, userId: number) => {
+    const [entry] = await getOneSwimLane(swimData.project_id, swimId, userId);
+    if (entry) {
+        const updated = await swim.update(entry.id, swimData);
+        return updated;
+    }
+};
+
+export { getAllSwimLanes, getOneSwimLane, addOneSwimLane, updateSwimEntry };
