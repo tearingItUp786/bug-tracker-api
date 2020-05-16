@@ -49,8 +49,8 @@ const updateOneSwim: RequestHandler = async (req: any & { body: RestSwimInterfac
         if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
         const { id } = req.params;
         const { project_id, name, description } = req.body;
-        const updated = await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
-        res.status(NO_CONTENT).json({ updated });
+        await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
+        res.status(NO_CONTENT);
     } catch (e) {
         next(e);
     }

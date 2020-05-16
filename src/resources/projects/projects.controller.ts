@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { UNPROCESSABLE_ENTITY, CREATED } from 'http-status-codes';
+import { UNPROCESSABLE_ENTITY, CREATED, NO_CONTENT } from 'http-status-codes';
 import {
     getProjectsForUser,
     getOneProject,
@@ -52,8 +52,8 @@ export const updateOne: RequestHandler = async (req, res, next) => {
             res.status(200).send({});
         }
         const { name, url } = req.body;
-        const project = await updateOneProject(Number(id), { name, url });
-        res.status(204).json({ data: project });
+        await updateOneProject(Number(id), { name, url });
+        res.status(NO_CONTENT);
     } catch (e) {
         next(e);
     }
