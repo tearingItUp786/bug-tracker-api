@@ -16,4 +16,7 @@ const getAllSwimLanes = (project_id: number, userId: number) =>
         .innerJoin('user_projects AS up', 'up.id', 'swim_lanes.project_id')
         .andWhere('up.id', '=', userId);
 
-export { getAllSwimLanes };
+const getOneSwimLane = (project_id: number, swimId: number, userId: number) =>
+    getAllSwimLanes(project_id, userId).andWhere('swim_lanes.id', '=', swimId);
+
+export { getAllSwimLanes, getOneSwimLane };
