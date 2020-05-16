@@ -15,7 +15,7 @@ const postSchema = checkSchema({
     },
     severity: {
         isIn: {
-            options: ['CRITICAL', 'SEVERE', 'NORMAL', 'LOW'],
+            options: [['CRITICAL', 'SEVERE', 'NORMAL', 'LOW']],
             errorMessage: 'Invalid enum value',
         },
     },

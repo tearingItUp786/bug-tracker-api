@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { getAllSwimLanes, getOneSwimLane, addOneSwimLane, updateSwimEntry } from './swim_lanes.model';
+import { getAllSwimLanes, getOneSwimLane, addOneSwimLane, updateSwimEntry, removeSwimEntry } from './swim_lanes.model';
 import { AppError } from '@utils/AppError';
 import { OK, BAD_REQUEST, CREATED, NO_CONTENT } from 'http-status-codes';
 import { validationResult } from 'express-validator';
@@ -23,8 +23,7 @@ const getOneSwimLaneForUser: RequestHandler = async (req, res, next) => {
         const valErrors = validationResult(req);
         if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
         const { id } = req.params;
-        const { project_id } = req.body;
-        const [swim_lane] = await getOneSwimLane(project_id, Number(id), req.user.id);
+        const [swim_lane] = await getOneSwimLane(Number(id), req.user.id);
         res.status(OK).json({ swim_lane });
     } catch (e) {
         next(e);
@@ -48,12 +47,24 @@ const updateOneSwim: RequestHandler = async (req: any & { body: RestSwimInterfac
         const valErrors = validationResult(req);
         if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
         const { id } = req.params;
-        const { project_id, name, description } = req.body;
-        const updated = await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
+        const { name, description } = req.body;
+        const updated = await updateSwimEntry({ name, description }, Number(id), req.user.id);
         res.status(NO_CONTENT).json({ updated });
     } catch (e) {
         next(e);
     }
 };
 
-export { getAllSwimLanesForUser, getOneSwimLaneForUser, addSwimLane, updateOneSwim };
+const delOneSwim: RequestHandler = async (req, res, next) => {
+    try {
+        const valErrors = validationResult(req);
+        if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
+        const { id } = req.params;
+        const successfulDelete = await removeSwimEntry(Number(id), req.user.id);
+        res.status(NO_CONTENT).json({ successfulDelete });
+    } catch (e) {
+        next(e);
+    }
+};
+
+export { getAllSwimLanesForUser, getOneSwimLaneForUser, addSwimLane, updateOneSwim, delOneSwim };
