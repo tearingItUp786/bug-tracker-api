@@ -15,7 +15,7 @@ const getAllSwimLanes = (project_id: number, userId: number) =>
         .findAll()
         .where('swim_lanes.project_id', '=', `${project_id}`)
         .innerJoin('user_projects AS up', 'up.id', 'swim_lanes.project_id')
-        .andWhere('up.id', '=', userId);
+        .andWhere('up.user_id', '=', userId);
 
 const getOneSwimLane = (project_id: number, swimId: number, userId: number) =>
     getAllSwimLanes(project_id, userId).andWhere('swim_lanes.id', '=', swimId);

@@ -24,8 +24,8 @@ const getOneSwimLaneForUser: RequestHandler = async (req, res, next) => {
         if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
         const { id } = req.params;
         const { project_id } = req.body;
-        const data = await getOneSwimLane(project_id, Number(id), req.user.id);
-        res.status(OK).json({ data });
+        const [swim_lane] = await getOneSwimLane(project_id, Number(id), req.user.id);
+        res.status(OK).json({ swim_lane });
     } catch (e) {
         next(e);
     }
@@ -49,8 +49,8 @@ const updateOneSwim: RequestHandler = async (req: any & { body: RestSwimInterfac
         if (!valErrors.isEmpty()) throw new AppError(BAD_REQUEST, 'Failed validation', valErrors.array());
         const { id } = req.params;
         const { project_id, name, description } = req.body;
-        await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
-        res.status(NO_CONTENT);
+        const updated = await updateSwimEntry({ project_id, name, description }, Number(id), req.user.id);
+        res.status(NO_CONTENT).json({ updated });
     } catch (e) {
         next(e);
     }
