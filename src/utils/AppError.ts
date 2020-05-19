@@ -5,7 +5,7 @@ export class AppError extends Error {
     public readonly isOperational: boolean;
     public readonly errorArrays: any[];
 
-    constructor(httpCode: number, description: string, errorsArray?: any, isOperational: boolean = true) {
+    constructor(httpCode: number, description: string, errorsArray?: any, isOperational = true) {
         super(description);
 
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
