@@ -17,7 +17,7 @@ router.put(
             optional: true,
         },
         email: {
-            isString: true,
+            isEmail: true,
             optional: true,
         },
     }),
