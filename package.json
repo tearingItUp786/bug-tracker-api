@@ -49,6 +49,7 @@
         "typescript": "3.8.3"
     },
     "dependencies": {
+        "@types/dotenv": "^8.2.0",
         "@types/http-status-codes": "^1.2.0",
         "bcrypt": "^4.0.1",
         "dotenv": "^8.2.0",
@@ -63,9 +64,9 @@
         "pg": "^8.0.2"
     },
     "_moduleAliases": {
-        "@utils": "dist/src/utils/",
-        "@resources": "dist/src/resources/",
-        "@config": "dist/src/config/index.js",
+        "@utils": "dist/utils/",
+        "@resources": "dist/resources/",
+        "@config": "dist/config/index.js",
         "@knex": "dist/utils_knex/index.js"
     }
 }

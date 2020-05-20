@@ -1,9 +1,5 @@
 import { merge } from 'lodash';
-import { resolve } from 'path';
-import { config } from 'dotenv';
-
-// set up process to have env variables for donev.
-config({ path: resolve(__dirname, '../../.env') });
+import './env';
 const env = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
