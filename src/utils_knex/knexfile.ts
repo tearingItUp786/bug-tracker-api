@@ -1,4 +1,4 @@
-import config from '@config';
+import config from '../config';
 interface KnexConfig {
     [key: string]: object;
 }
@@ -14,10 +14,10 @@ const knexConfig: KnexConfig = {
             max: 10,
         },
         migrations: {
-            directory: __dirname + '/utils_knex/migrations',
+            directory: __dirname + '/migrations',
         },
         seeds: {
-            directory: __dirname + '/utils_knex/seeds',
+            directory: __dirname + '/seeds',
         },
     },
 
