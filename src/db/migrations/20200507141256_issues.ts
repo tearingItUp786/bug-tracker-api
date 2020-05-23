@@ -1,4 +1,6 @@
-exports.up = function (knex) {
+import * as Knex from 'knex';
+
+export async function up(knex: Knex) {
     return knex.schema.createTable('issues', function (table) {
         table.increments();
         table.string('name').notNullable();
@@ -18,8 +20,8 @@ exports.up = function (knex) {
         table.foreign('assignee_id').references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE');
         table.foreign('swim_lane_id').references('id').inTable('swim_lanes').onUpdate('CASCADE').onDelete('CASCADE');
     });
-};
+}
 
-exports.down = function (knex) {
+export async function down(knex: Knex) {
     return knex.schema.dropTable('issue');
-};
+}

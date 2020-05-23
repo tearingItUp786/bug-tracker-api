@@ -1,6 +1,7 @@
+import * as Knex from 'knex';
 import bcrypt from 'bcrypt';
 
-exports.seed = function (knex) {
+export async function seed(knex: Knex) {
     // Deletes ALL existing entries
     return knex('users')
         .del()
@@ -13,4 +14,4 @@ exports.seed = function (knex) {
                 { id: 3, email: 'test3@test.com', first_name: 'Test', last_name: 'testy', password },
             ]);
         });
-};
+}

@@ -2,7 +2,6 @@
     "compilerOptions": {
         "module": "commonjs",
         "esModuleInterop": true,
-        "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "target": "es6",
         "noImplicitAny": true,
@@ -12,7 +11,7 @@
         "baseUrl": "./",
         "rootDir": "./src",
         "paths": {
-            "@knex": ["./src/utils_knex/index.ts"],
+            "@knex": ["src/db/index.ts"],
             "@config": ["./src/config/index.ts"],
             "@utils/*": ["./src/utils/*"],
             "@resources/*": ["./src/resources/*"]

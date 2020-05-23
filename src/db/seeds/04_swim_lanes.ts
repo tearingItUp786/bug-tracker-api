@@ -1,4 +1,5 @@
-exports.seed = function (knex) {
+import * as Knex from 'knex';
+export async function seed(knex: Knex) {
     // Deletes ALL existing entries
     return knex('swim_lanes')
         .del()
@@ -11,4 +12,4 @@ exports.seed = function (knex) {
                 { id: 4, name: 'swim lane 4', description: '', project_id: 3 },
             ]);
         });
-};
+}

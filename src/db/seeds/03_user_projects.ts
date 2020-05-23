@@ -1,4 +1,5 @@
-exports.seed = function (knex) {
+import * as Knex from 'knex';
+export async function seed(knex: Knex) {
     // Deletes ALL existing entries
     return knex('user_projects')
         .del()
@@ -9,4 +10,4 @@ exports.seed = function (knex) {
                 { id: 2, project_id: 2, user_id: 2 },
             ]);
         });
-};
+}

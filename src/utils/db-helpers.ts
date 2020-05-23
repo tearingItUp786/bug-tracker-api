@@ -1,4 +1,4 @@
-import { kx } from '../utils_knex';
+import { kx } from '../db';
 
 function tableHelper(tableName: string, selectableProps: string[]) {
     const findAll = (props = selectableProps) => kx.select(props).from(tableName);
