@@ -5,7 +5,7 @@ export async function up(knex: Knex) {
         table.increments();
         table.string('name').notNullable();
         table.text('description');
-        table.enu('severity', ['CRITICAL', 'SEVERE', 'NORMAL', 'LOW'], {
+        table.enum('severity', ['CRITICAL', 'SEVERE', 'NORMAL', 'LOW'], {
             useNative: true,
             enumName: 'issue_severity ',
         });
@@ -23,5 +23,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-    return knex.schema.dropTable('issue');
+    return knex.schema.dropTable('issues');
 }

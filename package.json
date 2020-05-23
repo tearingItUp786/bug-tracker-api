@@ -14,6 +14,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "migrate:make": "knex --cwd src/db migrate:make -x ts",
         "migrate:latest": "knex --cwd src/db migrate:latest",
+        "migrate:rollback-all": "knex --cwd src/db migrate:rollback --all",
         "seed:make": "knex --cwd src/db seed:make -x ts",
         "seed:run": "knex --cwd src/db seed:run"
     },
