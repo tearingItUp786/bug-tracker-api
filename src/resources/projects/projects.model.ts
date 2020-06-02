@@ -22,8 +22,12 @@ const getOneProject = async (projectId: number, userId: number) => {
 const findProjectByName = (name: string) => query().where('p.name', '=', name);
 
 const addOneProject = async (projectData: RestProjectData, userId: number) => {
-    const [added] = await projectTable.addOne(projectData);
-    await userProjectsTable.addOne({ user_id: userId, project_id: added.id });
+    const added = await kx.transaction(async (trx) => {
+        const [added] = await projectTable.addOne(projectData).transacting(trx);
+        await userProjectsTable.addOne({ user_id: userId, project_id: added.id }).transacting(trx);
+        return added;
+    });
+
     return added;
 };
 
