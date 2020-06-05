@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { INTERNAL_SERVER_ERROR } from 'http-status-codes';
 
 export class AppError extends Error {
     public readonly httpCode: number;
@@ -29,4 +30,15 @@ export const handleError = (error: AppError, _: Request, res: Response, next: Ne
     }
 
     next(error);
+};
+
+export const logError = (error: Error, _req: Request, _res: Response, next: NextFunction) => {
+    console.error(error.stack);
+    next(error);
+};
+
+export const internalError = (error: Error, _req: Request, res: Response, next: NextFunction) => {
+    res.status(INTERNAL_SERVER_ERROR).json({
+        message: error.message,
+    });
 };

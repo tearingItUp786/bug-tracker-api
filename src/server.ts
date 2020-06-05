@@ -9,7 +9,8 @@ import userRouter from '@resources/users';
 import projectRouter from '@resources/projects';
 import swimLaneRouter from '@resources/swim_lanes';
 import issueRouter from '@resources/issues';
-import { handleError } from '@utils/AppError';
+import { handleError, logError, internalError } from '@utils/AppError';
+import { NOT_FOUND } from 'http-status-codes';
 
 const app = express();
 
@@ -27,8 +28,15 @@ app.use('/api/user', userRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/swim', swimLaneRouter);
 app.use('/api/issue', issueRouter);
+app.use((_req, res) => {
+    res.status(NOT_FOUND).json({
+        message: 'Route not found',
+    });
+});
 
+app.use(logError);
 app.use(handleError);
+app.use(internalError);
 
 const start = async () => {
     try {
